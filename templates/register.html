@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- Bootstrap CSS link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Custom CSS -->
+    <style>
+        .container {
+          background-color: #fff;
+          margin-top: 50px;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+        }
+        /* .alert {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+        } */
+        /* .close {
+            float: right;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #000;
+            text-shadow: 0 1px 0 #fff;
+            opacity: .5;
+        } */
+        .content-section {
+            margin-top: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        /* .btn {
+            display: inline-block;
+            font-weight: 400;
+            color: #fff;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        } */
+        .border-top {
+            border-top: 1px solid #e9ecef;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .border-bottom {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Complaint System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('home')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a class="nav-link" href="register.html">Register</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('student_login')}}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <!-- Alert Messages -->
+        <!-- <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            You have successfully logged in.
+        </div> -->
+
+        <!-- Content Section -->
+        <div class="content-section">
+            <form action="{{ url_for('register') }}" method="post">
+                {% if message is defined and message %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endif %}
+
+                <!-- Login Form Fields -->
+                <fieldset class="form-group">
+                    <legend class="border-bottom fs-2 mb-4">Create Account</legend>
+                    <!-- Your form fields go here -->
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Name</label>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email-id" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pwd" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" name="pswd">
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Register</button>
+                </div>
+            </form>
+            <!-- Additional Options -->
+            <div class="border-top pt-3">
+                <small>
+                    Already have an account? <a class="ml-2" href="{{url_for('login')}}">Login here</a>
+                    <div class="text-muted">
+                        <!-- <a href="password_reset.html">Forgot Password?</a> -->
+                    </div>
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 fixed-bottom">
+      &copy; 2024 Complaint Management System
+    </footer>
+
+
+    <!-- Bootstrap JavaScript and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

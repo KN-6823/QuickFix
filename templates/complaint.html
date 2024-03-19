@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Add Complaints</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .user-info {
+            margin-left: 0;
+            font-size: 25px;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin-bottom: 10px;
+            color: black;
+            padding: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .container {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            margin-top: 10px;
+            padding-left: 15px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .icon-container {
+            position: fixed;
+            bottom: 60px;
+            right: 40px;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        .icon-container img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+        }
+
+        .icon-container.hide {
+            position: fixed;
+            bottom: -200px;
+            transition: bottom 0.8s ease-in-out;
+        }
+
+        /* Chatbot Container */
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 10px;
+            padding-left: 0;
+            padding-right: 0;
+            width: calc(100% - 20px); 
+            height: 550px; 
+            background: rgb(234, 238, 243);
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            z-index: 9999;
+          }
+
+          .chatbot-header {
+            padding: 10px;
+            background-color: #0ca1ec;
+            color: white;
+            border-bottom: 1px solid #ccc;
+            border-radius: 0px 15px 15px 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            width: 100%;
+            box-sizing: border-box; 
+          }
+
+          .chatbot-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%; 
+          }
+
+          .close-icon {
+            cursor: pointer;
+            align-items: center;
+            font-size: 25px;
+          }
+
+          .chatbot-message {
+            display: block;
+            font-size: 13px;
+            margin: 8px;
+            padding: 8px 10px;
+            background-color: white;
+            border-radius: 15px;
+          }
+
+          .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+          }
+              
+
+          #messageInput { 
+            position: absolute;
+              bottom: 10px;
+              width: 100%;
+              padding: 12px;
+              margin-left: px;
+              margin-right: px;
+              background-color: white;
+              border: none;
+              border-radius: 25px;
+              color: black;
+          }
+
+
+
+      button {  
+        position: absolute;
+        background: rgb(6, 186, 78);
+        color: white;
+        padding: 8px;
+        bottom: 12px;
+        right: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 50%;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      button svg {
+        transform: rotate(45deg) scale(1.0);
+      }
+
+      .logout-button {
+          /* display: inline-block;
+          padding: 8px 15px 8px 15px;
+          background-color: red; */
+          color: red !important; 
+          font-weight: bold;
+          /* border-radius: 5px;
+          text-decoration: none; */
+      }
+
+      .logout-button:hover {
+          background-color: rgba(255, 252, 252, 0.1);
+          padding: 8px 15px 8px 15px;
+          border-radius: 10px;
+      }
+
+      .border-bottom {
+          font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+          font-weight: bold;
+      }
+
+      select#inputType {
+          width: 100%;
+          max-width: 100%;
+      }
+
+      #complaint {
+          display: flex;
+          position: relative;
+          flex-direction: column;
+          align-items: flex-start;
+          margin: 5px;     
+      }
+
+
+        @media (max-width: 567px) {
+            .user-info {
+                font-size: 20px; 
+            }
+
+            .user-info strong {
+              display: inline-block;
+            }
+
+            select#inputType {
+                width: 100%;
+                max-width: 100%;
+            } 
+        }
+
+
+    </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Complaint System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('home')}}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link logout-button" href="{{url_for('logout')}}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+
+    <!-- <div class="user-info container">
+        <span>Welcome, <strong>{{session.name}}</strong></span>
+    </div>
+    <div class="container-fluid">
+        <div class="form-container">
+          <legend class="border-bottom border-primary fs-1 mb-4"><b>Add Complaints</b></legend>
+            <div class="form-group mt-4">
+                <label for="inputSubject">Subject</label>
+                <input type="text" class="form-control border-primary" id="inputSubject" placeholder="Enter subject">
+            </div>
+            <div class="form-group">
+                <label for="inputType">Type of Complaint</label>
+                <select class="form-control border-primary" id="inputType">
+                    <option value="infra-structure">Infrastructure</option>
+                    <option value="counsellor">Counsellor</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="inputDescription">Description</label>
+                <textarea class="form-control border-primary" id="inputDescription" rows="4" placeholder="Enter description"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div> -->
+
+
+    <div class="user-info container">
+      <span>Welcome, <strong>{{ session.name }}</strong></span>
+  </div>
+  <div class="container-fluid">
+    <div class="form-container">
+        <form id="complaintForm" action="{{ url_for('add_complaint') }}" method="post">
+          {% if message is defined and message %}
+              <div class="alert alert-warning" id ="message">{{ message }}</div>
+          {% endif %}        
+
+            <legend class="border-bottom border-primary fs-1 mb-4"><b>Add Complaints</b></legend>
+            <div class="form-group mt-4">
+                <label for="inputSubject">Subject</label>
+                <input type="text" class="form-control border-primary" id="inputSubject" name="subject" placeholder="Enter subject">
+            </div>
+            <div class="form-group">
+                <label for="inputType">Type of Complaint</label>
+                <select class="form-control border-primary" id="inputType" name="complaint_type">
+                    <option value="Infrastructure">Infrastructure</option>
+                    <option value="Counsellor">Counsellor</option>
+                    <option value="Facilities Management">Facilities Management</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="inputDescription">Description</label>
+                <textarea class="form-control border-primary" id="inputDescription" name="description" rows="4" placeholder="Enter description"></textarea>
+            </div>
+            <div class="form-group text-center">
+              <button id="complaint" class="btn btn-primary" type="submit">Submit</button>
+          </div>
+          
+        </form>
+    </div>
+</div>
+
+  
+
+  
+
+        <div class="icon-container" onclick="moveAndRemove()">
+          <img src="https://st4.depositphotos.com/4799321/22638/v/450/depositphotos_226382150-stock-illustration-cute-robot-chatbot-icon-flat.jpg" alt="Icon" id="icon">
+        </div>
+
+        <!-- <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-5 chatbot-container" id="chatbotContainer">
+              <div class="chatbot-header">
+                <img src="https://st4.depositphotos.com/4799321/22638/v/450/depositphotos_226382150-stock-illustration-cute-robot-chatbot-icon-flat.jpg" alt="Icon" class="img-fluid rounded-circle">
+                <h4>Chatbot</h4>
+                <span class="close-icon" onclick="closeChatbot()">x</span>
+              </div>
+              <div class="chatbot-message"> Hello!! </div>
+              <div class="chatbot-message"> Welcome to the chatbot! </div>
+              <input type="text" class="chat-input" id="messageInput" placeholder="Type your message here">
+              <button id="sendButton" type="button" onclick="sendMessage()">
+                <span class="visually-hidden">Send</span>
+                <div class="svg-wrapper-1">
+                  <div class="svg-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                    >
+                      <path fill="none" d="M0 0h24v24H0z"></path>
+                      <path
+                        fill="currentColor"
+                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div> -->
+      
+      
+
+    <footer class="bg-dark text-white text-center py-3 fixed-bottom">
+      &copy; 2024 Complaint Management System
+    </footer>
+
+
+
+
+
+
+    <script>
+        // // Get the input element for username
+        // var inputName = document.getElementById('inputName');
+        // // Get the span element to display the username
+        // var usernameSpan = document.getElementById('username');
+
+        // // Listen for input changes
+        // inputName.addEventListener('input', function() {
+        //     // Update the username display
+        //     usernameSpan.textContent = inputName.value;
+        // });
+
+
+
+        function moveAndRemove() {
+            var iconContainer = document.querySelector('.icon-container');
+            iconContainer.classList.add('hide');
+            setTimeout(function() {
+                iconContainer.remove();
+            }, 500);
+        }
+
+        // Remove the message after 5 seconds
+        setTimeout(function() {
+            var element = document.getElementById('message');
+            element.parentNode.removeChild(element);
+        }, 5000);
+
+
+    </script>
+
+        <!-- Bootstrap JS and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
